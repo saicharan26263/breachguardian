@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -111,5 +110,45 @@
   
   .icon-wrapper {
     @apply w-16 h-16 flex items-center justify-center rounded-full bg-breach-100 text-breach-800 mb-6;
+  }
+
+  .cyber-glow {
+    @apply relative;
+    box-shadow: 0 0 10px theme('colors.breach.400/30'),
+                0 0 30px theme('colors.breach.500/20');
+  }
+  
+  .cyber-grid-bg {
+    background-size: 50px 50px;
+    background-image: 
+      linear-gradient(to right, theme('colors.breach.100/5') 1px, transparent 1px),
+      linear-gradient(to bottom, theme('colors.breach.100/5') 1px, transparent 1px);
+  }
+  
+  .cyber-node {
+    @apply w-2 h-2 rounded-full bg-breach-400 absolute;
+    animation: cyber-pulse 3s infinite;
+  }
+  
+  @keyframes cyber-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+  }
+  
+  .digital-noise {
+    position: relative;
+  }
+  
+  .digital-noise::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.05;
+    z-index: 10;
   }
 }
