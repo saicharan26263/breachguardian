@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from "react";
-import { ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -41,7 +40,11 @@ const Navbar = () => {
           href="#" 
           className="flex items-center gap-2 text-xl md:text-2xl font-bold text-breach-950"
         >
-          <ShieldCheck className="h-8 w-8 text-breach-600" />
+          <img 
+            src="/lovable-uploads/5e99844c-35e3-4e2f-90f4-559c17b2d6f3.png" 
+            alt="BreachHunters Logo"
+            className="h-10 w-auto"
+          />
           <span>BreachHunters</span>
         </a>
         
