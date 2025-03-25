@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { Mail, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -20,17 +20,33 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      emailjs.init("YOUR_PUBLIC_KEY");
+      
+      const templateParams = {
+        to_email: "saic26263@gmail.com",
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.company,
+        service_interest: formData.serviceInterest,
+        message: formData.message,
+      };
+      
+      await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        templateParams
+      );
+      
       toast({
         title: "Message Sent Successfully",
         description: "Thank you for reaching out! We'll get back to you shortly.",
       });
-      setIsSubmitting(false);
+      
       setFormData({
         name: "",
         email: "",
@@ -38,12 +54,20 @@ const Contact = () => {
         message: "",
         serviceInterest: "soc"
       });
-    }, 1500);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast({
+        title: "Error",
+        description: "There was an issue sending your message. Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 -z-10 opacity-20">
         <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-breach-100 filter blur-3xl"></div>
       </div>
@@ -57,7 +81,6 @@ const Contact = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Contact Info */}
           <div className="lg:col-span-1">
             <div className="glass-card rounded-2xl p-8 animate-fade-in-right">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
@@ -96,7 +119,6 @@ const Contact = () => {
             </div>
           </div>
           
-          {/* Contact Form */}
           <div className="lg:col-span-2 animate-fade-in-left">
             <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
