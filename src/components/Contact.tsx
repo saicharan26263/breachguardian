@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Mail, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,10 +26,11 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
+      // Initialize EmailJS with your public key
       emailjs.init("YOUR_PUBLIC_KEY");
       
       const templateParams = {
-        to_email: "saic26263@gmail.com",
+        to_email: "your-email@example.com", // Update this with your email address
         from_name: formData.name,
         from_email: formData.email,
         company: formData.company,
@@ -37,8 +39,8 @@ const Contact = () => {
       };
       
       await emailjs.send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        "YOUR_SERVICE_ID", // Update with your EmailJS service ID
+        "YOUR_TEMPLATE_ID", // Update with your EmailJS template ID
         templateParams
       );
       
@@ -47,6 +49,7 @@ const Contact = () => {
         description: "Thank you for reaching out! We'll get back to you shortly.",
       });
       
+      // Reset form after successful submission
       setFormData({
         name: "",
         email: "",
