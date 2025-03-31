@@ -11,8 +11,10 @@ export default defineConfig(({ mode }) => {
   const isProd = mode === 'production';
   
   return {
+    // Base path for Apache deployment
+    base: '/',
     server: {
-      host: "0.0.0.0", // Changed from "::" to "0.0.0.0" for better public IP compatibility
+      host: "0.0.0.0", // For better public IP compatibility
       port: isProd ? 80 : 8080,
       https: isProd ? {
         // For HTTPS (port 443) in production
@@ -39,6 +41,12 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+    },
+    build: {
+      // Output to a directory that Apache can serve
+      outDir: 'dist',
+      // Generate an .htaccess file for Apache
+      emptyOutDir: true,
     },
   }
 });

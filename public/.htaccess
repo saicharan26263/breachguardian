@@ -1,0 +1,28 @@
+
+# Enable rewriting
+RewriteEngine On
+
+# If the requested resource doesn't exist as a file
+RewriteCond %{REQUEST_FILENAME} !-f
+# And doesn't exist as a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# Then rewrite all requests to the root index.html
+RewriteRule ^(.*)$ index.html [QSA,L]
+
+# Set correct MIME types
+AddType application/javascript .js
+AddType application/json .json
+AddType text/css .css
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+
+# GZIP compression for better performance
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+# Set caching headers for static assets
+<FilesMatch "\.(js|css|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$">
+  Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
