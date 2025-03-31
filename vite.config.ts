@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
   
   return {
     server: {
-      host: "::",
+      host: "0.0.0.0", // Changed from "::" to "0.0.0.0" for better public IP compatibility
       port: isProd ? 80 : 8080,
       https: isProd ? {
         // For HTTPS (port 443) in production
@@ -24,7 +24,11 @@ export default defineConfig(({ mode }) => {
     preview: {
       // For preview mode
       port: isProd ? 80 : 8080,
-      https: isProd ? true : false,
+      https: isProd ? {
+        // Match the server configuration format
+        key: fs.existsSync('./certs/key.pem') ? './certs/key.pem' : undefined,
+        cert: fs.existsSync('./certs/cert.pem') ? './certs/cert.pem' : undefined,
+      } : undefined,
     },
     plugins: [
       react(),
