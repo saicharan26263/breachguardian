@@ -30,19 +30,21 @@ const Contact = () => {
       emailjs.init("YOUR_PUBLIC_KEY");
       
       const templateParams = {
-        to_email: "your-email@example.com", // Update this with your email address
         from_name: formData.name,
         from_email: formData.email,
         company: formData.company,
         service_interest: formData.serviceInterest,
         message: formData.message,
+        // Note: Do not include to_email here as it should be configured in the EmailJS template
       };
       
-      await emailjs.send(
+      const result = await emailjs.send(
         "YOUR_SERVICE_ID", // Update with your EmailJS service ID
         "YOUR_TEMPLATE_ID", // Update with your EmailJS template ID
         templateParams
       );
+      
+      console.log("Email sent successfully:", result);
       
       toast({
         title: "Message Sent Successfully",
