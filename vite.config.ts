@@ -17,19 +17,18 @@ export default defineConfig(({ mode }) => {
       host: "0.0.0.0", // For better public IP compatibility
       port: isProd ? 80 : 8080,
       https: isProd ? {
-        // For HTTPS (port 443) in production
-        // These are placeholder paths - you'll need to provide actual certificate files
-        key: fs.existsSync('./certs/key.pem') ? './certs/key.pem' : undefined,
-        cert: fs.existsSync('./certs/cert.pem') ? './certs/cert.pem' : undefined,
+        // Use Let's Encrypt certificates in production
+        key: fs.existsSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem') ? '/etc/letsencrypt/live/yourdomain.com/privkey.pem' : undefined,
+        cert: fs.existsSync('/etc/letsencrypt/live/yourdomain.com/fullchain.pem') ? '/etc/letsencrypt/live/yourdomain.com/fullchain.pem' : undefined,
       } : undefined,
     },
     preview: {
       // For preview mode
       port: isProd ? 80 : 8080,
       https: isProd ? {
-        // Match the server configuration format
-        key: fs.existsSync('./certs/key.pem') ? './certs/key.pem' : undefined,
-        cert: fs.existsSync('./certs/cert.pem') ? './certs/cert.pem' : undefined,
+        // Use Let's Encrypt certificates in production
+        key: fs.existsSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem') ? '/etc/letsencrypt/live/yourdomain.com/privkey.pem' : undefined,
+        cert: fs.existsSync('/etc/letsencrypt/live/yourdomain.com/fullchain.pem') ? '/etc/letsencrypt/live/yourdomain.com/fullchain.pem' : undefined,
       } : undefined,
     },
     plugins: [
